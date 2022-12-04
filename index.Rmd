@@ -1,0 +1,55 @@
+---
+title: "Примеры"
+output: html_document
+runtime: shiny
+---
+
+```{r, echo=FALSE}
+library(shiny)
+shinyApp(
+
+  ui = fluidPage(
+    selectInput("region", "Region:",
+                choices = colnames(WorldPhones)),
+    plotOutput("phonePlot")
+  ),
+
+  server = function(input, output) {
+    output$phonePlot = renderPlot({
+      barplot(WorldPhones[,input$region]*1000,
+              ylab = "Number of Telephones", xlab = "Year")
+    })
+  },
+
+  options = list(height = 500)
+)
+```
+
+```{r, echo=FALSE}
+sliderInput("bins", "Number of bins:", 30, min = 1, max = 50)
+
+renderPlot({
+  x    = faithful[, 2]  # Old Faithful Geyser data
+  bins = seq(min(x), max(x), length.out = input$bins + 1)
+
+  # draw the histogram with the specified number of bins
+  hist(x, breaks = bins, col = 'darkgray', border = 'white')
+})
+```
+
+```{r eruptions, echo = FALSE}
+require(stats) 
+plot(cars)
+lines(lowess(cars))
+
+plot(sin, -pi, 2*pi) #
+
+
+plot(table(rpois(100, 5)), type = "h", col = "red", lwd = 10,
+     main = "rpois(100, lambda = 5)")
+
+
+plot(x <- sort(rnorm(47)), type = "s", main = "plot(x, type = \"s\")")
+points(x, cex = .5, col = "dark red")
+
+```
