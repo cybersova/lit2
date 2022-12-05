@@ -29,10 +29,9 @@ shinyApp(
 sliderInput("bins", "Number of bins:", 30, min = 1, max = 50)
 
 renderPlot({
-  x    = faithful[, 2]  # Old Faithful Geyser data
+  x    = faithful[, 2]  
   bins = seq(min(x), max(x), length.out = input$bins + 1)
 
-  # draw the histogram with the specified number of bins
   hist(x, breaks = bins, col = 'darkgray', border = 'white')
 })
 ```
@@ -52,4 +51,38 @@ plot(table(rpois(100, 5)), type = "h", col = "red", lwd = 10,
 plot(x <- sort(rnorm(47)), type = "s", main = "plot(x, type = \"s\")")
 points(x, cex = .5, col = "dark red")
 
+ui <- fluidPage(
+
+  sidebarLayout(
+    sidebarPanel(
+      fileInput(
+        inputId = "file1",
+        label = "Загрузите изображение",
+        accept = c('image/png', 'image/jpeg','image/jpg')
+      ),
+      tags$hr()
+    ),
+    mainPanel(
+      textOutput("filename"),
+      imageOutput(outputId = "Invoice")
+    )
+  )
+)
+server <- function(input, output) {
+
+  re1 <- reactive({
+    gsub("\\\\", "/", input$file1$datapath)
+  })
+
+  obsB <- observe({
+    if(!is.null(input$file1$datapath)) {
+      output$Invoice <- renderImage({list(src = re1())}, deleteFile = TRUE)  
+      print(input$file1$datapath)
+    }
+  })
+  
+}
+shinyApp(ui, server)
+
 ```
+
