@@ -1,11 +1,13 @@
 name: lit2
-title:
+title: lit2
 username:
 account: qwe-rty
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7808449
-bundleId: 6589494
+bundleId: 6593609
 url: https://qwe-rty.shinyapps.io/lit2/
-when: 1670171036.38003
-lastSyncTime: 1670171036.38004
+when: 1670248345.61772
+lastSyncTime: 1670248345.61773
+asMultiple: FALSE
+asStatic: FALSE
